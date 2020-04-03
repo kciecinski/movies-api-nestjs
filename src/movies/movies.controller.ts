@@ -1,8 +1,9 @@
 import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import {MoviesService} from './movies.service';
-import { NewMovieDto } from 'src/model/newMovieDto';
+import { NewMovieDto } from '../model/newMovieDto';
 import { RatingDto } from 'src/model/ratingDto';
 import { Movie } from '../entities/movie.entity'
+import { EditMovieDto } from 'src/model/editMovieDto';
 
 @Controller('movies')
 export class MoviesController {
@@ -24,9 +25,9 @@ export class MoviesController {
   }
 
 
-  @Put()
-  async update(@Body() movie: Movie): Promise<void> {
-    return this.moviesService.update(movie);
+  @Put(':id')
+  async update(@Body() movie: EditMovieDto, @Param('id') id: string): Promise<void> {
+    return this.moviesService.update(movie, id);
   }
 
   @Delete(':id')
@@ -35,7 +36,7 @@ export class MoviesController {
   }
 
   @Post(':id/rate')
-  async rate(@Param('id') id:string, @Body() rate: RatingDto): Promise<void> {
+  async rate(@Param('id') id:string, @Body() rate: RatingDto): Promise<string> {
     return this.moviesService.rateMovie(id, rate);
   }
 }

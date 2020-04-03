@@ -12,9 +12,9 @@ export class Movie extends BaseEntity {
   @Column()
   desc: string;
 
-  @Column({ default: 0 })
+  @Column({ default: 0, type: "decimal" })
   rating: number;
 
-  @Column({ default: 0 })
+  @Column({ default: 0, type: "int" })
   numberOfRates: number;
 }
